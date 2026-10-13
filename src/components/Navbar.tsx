@@ -121,10 +121,8 @@ export default function Navbar({ introPhase = 'completed' }: NavbarProps) {
             <ThemeSwitcher />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="mobile-nav-actions">
-            <div className="mobile-only" style={{ display: 'flex', alignItems: 'center' }}>
-              <ThemeSwitcher />
-            </div>
+          <div className="mobile-nav-actions">
+            <ThemeSwitcher />
 
             <button 
               className="mobile-menu-btn" 
