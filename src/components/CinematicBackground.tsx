@@ -62,11 +62,15 @@ export default function CinematicBackground() {
     color2: 'rgba(30, 80, 200, 0.06)'   // Blue
   });
 
-  const reducedMotion = useRef(false);
+  const [reducedMotion, setReducedMotion] = useState(() => 
+    typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
+  );
 
   useEffect(() => {
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
-    reducedMotion.current = mql.matches;
+    setReducedMotion(mql.matches);
+    const handleMqlChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mql.addEventListener('change', handleMqlChange);
 
     let ticking = false;
 
@@ -115,13 +119,16 @@ export default function CinematicBackground() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      mql.removeEventListener('change', handleMqlChange);
+    };
   }, []);
 
   // Canvas Particles
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || reducedMotion.current) return;
+    if (!canvas || reducedMotion) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -165,11 +172,11 @@ export default function CinematicBackground() {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [reducedMotion]);
 
   // Smooth Mouse Follower
   useEffect(() => {
-    if (reducedMotion.current || window.innerWidth < 768) return;
+    if (reducedMotion || window.innerWidth < 768) return;
     
     let currentX = window.innerWidth / 2;
     let currentY = window.innerHeight / 2;
@@ -197,7 +204,7 @@ export default function CinematicBackground() {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [reducedMotion]);
 
   // Calculate parallax offsets
   const parallaxY = scrollProgress * 150; 
@@ -226,7 +233,7 @@ export default function CinematicBackground() {
       />
 
       {/* 2. Soft Radial Glow Orbs (Animated) */}
-      {!reducedMotion.current && (
+      {!reducedMotion && (
         <div style={{
           position: 'absolute',
           inset: 0,
@@ -243,7 +250,7 @@ export default function CinematicBackground() {
       )}
 
       {/* 3. Mouse Interaction Glow */}
-      {!reducedMotion.current && !isMobile && (
+      {!reducedMotion && !isMobile && (
         <div style={{
           position: 'absolute',
           top: 0,

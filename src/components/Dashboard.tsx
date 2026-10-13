@@ -39,7 +39,7 @@ export default function Dashboard() {
     
     if (revealRef.current) observer.observe(revealRef.current);
     return () => observer.disconnect();
-  }, [isRevealed]);
+  }, [isRevealed, revealRef]);
 
   // Terminal Log Sequence
   useEffect(() => {

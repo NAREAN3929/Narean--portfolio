@@ -9,22 +9,18 @@ const themes = [
 ];
 
 export default function ThemeSwitcher() {
-  const [activeTheme, setActiveTheme] = useState('indigo');
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'indigo';
-    const savedMode = localStorage.getItem('portfolio-mode');
-    
-    // Default to dark mode if no mode is saved
-    const isDark = savedMode !== 'light';
-    
-    setActiveTheme(savedTheme);
-    setIsDarkMode(isDark);
-    
-    applyThemeColor(savedTheme);
-    applyMode(isDark);
-  }, []);
+  const [activeTheme, setActiveTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('portfolio-theme') || 'indigo';
+    }
+    return 'indigo';
+  });
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('portfolio-mode') !== 'light';
+    }
+    return true;
+  });
 
   const applyThemeColor = (themeId: string) => {
     const theme = themes.find(t => t.id === themeId) || themes[0];
@@ -45,6 +41,11 @@ export default function ThemeSwitcher() {
       localStorage.setItem('portfolio-mode', 'light');
     }
   };
+
+  useEffect(() => {
+    applyThemeColor(activeTheme);
+    applyMode(isDarkMode);
+  }, []);
 
   const handleThemeChange = (themeId: string) => {
     setActiveTheme(themeId);

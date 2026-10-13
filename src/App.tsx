@@ -18,7 +18,7 @@ import CommandPalette from './components/CommandPalette';
 import CinematicBackground from './components/CinematicBackground';
 import InteractiveAvatar from './components/InteractiveAvatar';
 
-export type IntroPhase = 'initial' | 'avatar-reveal' | 'icons-orbit' | 'message' | 'transforming' | 'completed';
+export type IntroPhase = 'initial' | 'playing' | 'avatar-reveal' | 'icons-orbit' | 'message' | 'transforming' | 'completed';
 
 function App() {
   const [introPhase, setIntroPhase] = useState<IntroPhase>(() => {
