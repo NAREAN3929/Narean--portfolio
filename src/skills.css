@@ -1,0 +1,310 @@
+/* --- Tech Stack Section --- */
+
+.skills-section {
+  padding: 8rem 0;
+  position: relative;
+  background: linear-gradient(to bottom, #050505, #0a0a0f, #050505);
+}
+
+.skills-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.skills-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(45, 212, 191, 0.1);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+  border-radius: 100px;
+  color: #2dd4bf;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+.skills-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* --- TECHNOLOGY DNA MAP (tech-dna-) --- */
+
+.tech-dna-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  aspect-ratio: 5 / 3;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.tech-dna-svg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tech-dna-edge {
+  stroke-width: 1.5;
+  transition: all 0.4s ease;
+  stroke-dasharray: 6 6;
+}
+
+@keyframes data-flow {
+  to { stroke-dashoffset: -200; }
+}
+
+.tech-dna-edge.state-dimmed {
+  opacity: 0.1;
+}
+.tech-dna-edge.state-normal {
+  opacity: 0.3;
+}
+.tech-dna-edge.state-highlighted {
+  opacity: 0.8;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: data-flow 10s linear infinite;
+}
+
+.tech-dna-nodes-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.tech-dna-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tech-dna-node-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  color: #a3a3a3;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  z-index: 2;
+  animation: node-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes node-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+.tech-dna-node.type-center .tech-dna-node-inner {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+.tech-dna-node.type-category .tech-dna-node-inner {
+  border-color: var(--node-color);
+  color: var(--node-color);
+  background: color-mix(in srgb, var(--node-color) 10%, rgba(10, 10, 15, 0.9));
+}
+
+/* States */
+.tech-dna-node.state-dimmed {
+  opacity: 0.2;
+  filter: grayscale(1);
+}
+
+.tech-dna-node.state-highlighted {
+  transform: translate(-50%, -50%) scale(1.1);
+  z-index: 10;
+}
+
+.tech-dna-node.state-highlighted .tech-dna-node-inner {
+  color: #fff;
+  border-color: var(--node-color);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--node-color) 40%, transparent);
+}
+
+/* Details Panel */
+.tech-dna-panel {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: 320px;
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.tech-dna-panel.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.panel-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #a3a3a3;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.panel-close:hover {
+  color: #fff;
+}
+
+.panel-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.panel-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.panel-desc {
+  font-size: 0.95rem;
+  color: #a3a3a3;
+  line-height: 1.6;
+}
+
+/* Mobile Visibility */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+  
+  .tech-dna-wrapper {
+    aspect-ratio: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow: visible;
+  }
+  
+  .tech-dna-mobile-layer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .tech-dna-mobile-category {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tech-dna-mobile-category::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--node-color);
+  }
+  
+  .mobile-cat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--node-color);
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+  .mobile-cat-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .mobile-skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .mobile-skill-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e5e5;
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .mobile-skill-btn:active {
+    background: var(--node-color);
+    color: #fff;
+    border-color: var(--node-color);
+  }
+  
+  .tech-dna-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    z-index: 1000;
+  }
+}

@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Education & Academic Background Timeline Styles
+   Theme: Dark slate background, Neon cyan/teal accents, Glassmorphism cards
+   ========================================================================== */
+
+/* Variables specifically for Education section to ensure consistency */
+:root {
+  --edu-bg: #0a0f1d;
+  --edu-card-bg: rgba(16, 25, 43, 0.6);
+  --edu-card-hover: rgba(20, 32, 55, 0.8);
+  --edu-cyan: #00d2ff;
+  --edu-teal: #10b981;
+  --edu-cyan-glow: rgba(0, 210, 255, 0.4);
+  --edu-border: rgba(0, 210, 255, 0.2);
+  --edu-text-main: #ffffff;
+  --edu-text-muted: #94a3b8;
+  --edu-pill-bg: rgba(0, 210, 255, 0.1);
+}
+
+html[data-theme="light"] {
+  --edu-bg: var(--bg-color);
+  --edu-card-bg: var(--glass-bg);
+  --edu-card-hover: var(--glass-hover-bg);
+  --edu-cyan: var(--accent-color);
+  --edu-teal: var(--accent-color);
+  --edu-cyan-glow: var(--accent-glow);
+  --edu-border: var(--border-color);
+  --edu-text-main: var(--text-primary);
+  --edu-text-muted: var(--text-secondary);
+  --edu-pill-bg: var(--glass-bg);
+}
+
+.education-section {
+  padding: 8rem 0;
+  background-color: var(--edu-bg);
+  color: var(--edu-text-main);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional subtle background glow for the section */
+.education-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Header */
+.education-header-wrapper {
+  margin-bottom: 4rem;
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title .header-icon {
+  color: var(--edu-cyan);
+  filter: drop-shadow(0 0 8px var(--edu-cyan-glow));
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.header-title h2 {
+  font-size: 2.5rem;
+  margin: 0 0 0.25rem 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-title .subtitle {
+  color: var(--edu-text-muted);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.count-pill {
+  background: var(--edu-pill-bg);
+  color: var(--edu-cyan);
+  border: 1px solid var(--edu-border);
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+
+/* Timeline Container */
+.education-timeline-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Vertical Timeline Line */
+.timeline-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    var(--edu-cyan) 10%, 
+    var(--edu-cyan) 90%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 10px var(--edu-cyan-glow);
+  border-radius: 2px;
+}
+
+.timeline-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem 0;
+}
+
+/* Timeline Item Container */
+.timeline-item {
+  position: relative;
+  padding-left: 60px;
+}
+
+/* Glowing Node */
+.timeline-node {
+  position: absolute;
+  left: 12px;
+  top: 24px;
+  width: 18px;
+  height: 18px;
+  background-color: var(--edu-bg);
+  border: 2px solid var(--edu-cyan);
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 15px var(--edu-cyan-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-node .node-inner {
+  width: 6px;
+  height: 6px;
+  background-color: var(--edu-cyan);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item:hover .timeline-node .node-inner {
+  transform: scale(1.5);
+  box-shadow: 0 0 10px var(--edu-cyan);
+}
+
+/* Card */
+.timeline-card {
+  position: relative;
+  background: var(--edu-card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem; /* rounded-2xl roughly */
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  overflow: hidden;
+}
+
+.timeline-card:hover {
+  background: var(--edu-card-hover);
+  border-color: var(--edu-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 210, 255, 0.05);
+  transform: translateY(-4px);
+}
+
+/* Watermark */
+.card-watermark {
+  position: absolute;
+  bottom: -1rem;
+  right: -1rem;
+  color: rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+  z-index: 0;
+}
+.card-watermark svg {
+  width: 150px;
+  height: 150px;
+  transform: rotate(-15deg);
+  transition: all 0.5s ease;
+}
+.timeline-card:hover .card-watermark {
+  color: rgba(0, 210, 255, 0.05);
+  transform: scale(1.1) rotate(0deg);
+}
+
+/* Header Row (Badges) */
+.card-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+.duration-badge {
+  background: var(--edu-pill-bg);
+  color: var(--edu-text-muted);
+  border: 1px solid var(--edu-border);
+}
+
+.score-badge {
+  background: var(--edu-pill-bg);
+  color: var(--edu-cyan);
+  border: 1px solid var(--edu-border);
+}
+
+/* Title & Info */
+.card-body {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.degree-title {
+  font-size: 1.5rem;
+  color: var(--edu-text-main);
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.timeline-card:hover .degree-title {
+  color: var(--edu-cyan);
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+.institution-name {
+  font-size: 1.1rem;
+  color: var(--edu-text-muted);
+  margin: 0 0 0.75rem 0;
+  font-weight: 500;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--edu-text-muted);
+  font-size: 0.9rem;
+}
+.location-info svg {
+  color: var(--edu-teal);
+}
+
+/* Score Box */
+.score-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.score-label {
+  font-size: 0.85rem;
+  color: var(--edu-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.score-value {
+  font-family: monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--edu-cyan);
+  text-shadow: 0 0 10px var(--edu-cyan-glow);
+}
+
+.progress-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--edu-teal), var(--edu-cyan));
+  border-radius: 9999px;
+  transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  width: 0%; /* Initial state before animation */
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Coursework Tags */
+.coursework-section {
+  position: relative;
+  z-index: 1;
+}
+
+.coursework-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--edu-text-muted);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.coursework-header svg {
+  color: var(--edu-cyan);
+}
+
+.coursework-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.coursework-tag {
+  background: var(--edu-pill-bg);
+  border: 1px solid var(--edu-border);
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  color: var(--edu-text-main);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.coursework-tag:hover {
+  background: var(--edu-pill-bg);
+  border-color: var(--edu-cyan);
+  color: var(--edu-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 210, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .education-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .timeline-line {
+    left: 10px;
+  }
+  
+  .timeline-node {
+    left: 2px;
+  }
+  
+  .timeline-item {
+    padding-left: 40px;
+  }
+  
+  .timeline-card {
+    padding: 1.5rem;
+  }
+}

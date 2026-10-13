@@ -1,0 +1,296 @@
+/* --- Tech Galaxy (Skills) --- */
+
+.tech-universe-section {
+  position: relative;
+  background-color: var(--bg-color);
+  padding: 6rem 0;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.universe-header {
+  text-align: center;
+  position: relative;
+  z-index: 20;
+  margin-bottom: 2rem;
+}
+
+.universe-title {
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+/* Galaxy Container */
+.galaxy-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.galaxy-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* Central Core */
+.galaxy-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at center, rgba(30, 30, 40, 0.9) 0%, rgba(10, 10, 15, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 0 40px rgba(120, 119, 198, 0.15), inset 0 0 20px rgba(255,255,255,0.05);
+  animation: core-pulse 4s ease-in-out infinite alternate;
+}
+
+.galaxy-core-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+@keyframes core-pulse {
+  0% { box-shadow: 0 0 40px rgba(120, 119, 198, 0.1), inset 0 0 20px rgba(255,255,255,0.02); }
+  100% { box-shadow: 0 0 60px rgba(120, 119, 198, 0.25), inset 0 0 30px rgba(255,255,255,0.08); }
+}
+
+/* Orbital Mechanics */
+.angle-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.orbit-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: orbit-spin linear infinite;
+  z-index: 10;
+}
+
+.connection-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  transform: translateY(-50%);
+  transform-origin: 0 50%;
+  opacity: 0.15;
+  transition: opacity 0.3s, background-color 0.3s;
+  pointer-events: none;
+}
+
+.orbit-node-positioner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.orbit-node-counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: counter-spin linear infinite;
+}
+
+.angle-counter-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+}
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counter-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Hover Freezing */
+.galaxy-paused .orbit-track,
+.galaxy-paused .orbit-node-counter {
+  animation-play-state: paused !important;
+}
+
+.galaxy-paused .connection-line {
+  opacity: 0.05;
+}
+
+/* Individual Node Styling */
+.tech-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.tech-node-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s;
+}
+
+.tech-node-icon {
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s;
+}
+
+/* Dimmed State when another is focused */
+.angle-wrapper.state-dimmed .tech-node {
+  opacity: 0.2;
+  filter: blur(2px);
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+/* Focused State */
+.angle-wrapper.state-focused {
+  z-index: 50;
+}
+.angle-wrapper.state-focused .tech-node {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: rgba(25, 25, 35, 0.95);
+  border-color: var(--node-color);
+  box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 15px var(--node-color-alpha);
+}
+.angle-wrapper.state-focused .tech-node-label {
+  color: #fff;
+}
+.angle-wrapper.state-focused .tech-node-icon {
+  color: #fff;
+  filter: drop-shadow(0 0 5px var(--node-color));
+}
+.angle-wrapper.state-focused .connection-line {
+  opacity: 0.8 !important;
+  background-color: var(--node-color) !important;
+  height: 2px;
+  box-shadow: 0 0 8px var(--node-color-alpha);
+}
+
+/* Info Card */
+.tech-info-card {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: max-content;
+  max-width: 220px;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--node-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+.angle-wrapper.state-focused .tech-info-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.info-card-header {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.info-card-category {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--node-color);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-card-desc {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .galaxy-container {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 768px) {
+  .tech-universe-section {
+    padding: 4rem 0;
+    min-height: auto;
+  }
+  .galaxy-wrapper {
+    min-height: 500px;
+  }
+  .galaxy-container {
+    transform: scale(0.55); /* Scale down for mobile so orbits fit */
+  }
+  .galaxy-core {
+    width: 120px;
+    height: 120px;
+  }
+  .tech-info-card {
+    /* To prevent cutting off on mobile */
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .galaxy-container {
+    transform: scale(0.4);
+  }
+}
