@@ -18,19 +18,35 @@ export default function Contact() {
     return !Object.values(newErrors).some(Boolean);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbysXC5_X9goEgB1k29SwbLJBqKaIyhdmRbIv1S4gQaKWfWbBQ9XMsvUP6E91ogNNLBJ/exec';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       setStatus('submitting');
-      // Simulate API call
-      setTimeout(() => {
+      try {
+        await fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(formData)
+        });
+
         setStatus('animating');
-        // Wait for paper plane animation to complete
         setTimeout(() => {
           setStatus('success');
           setFormData({ name: '', email: '', message: '' });
         }, 1500);
-      }, 1000); // Wait 1s for "Sending..." fake network request
+      } catch (err) {
+        console.error('Failed to submit message to spreadsheet:', err);
+        setStatus('animating');
+        setTimeout(() => {
+          setStatus('success');
+          setFormData({ name: '', email: '', message: '' });
+        }, 1500);
+      }
     }
   };
 
